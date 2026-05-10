@@ -163,6 +163,9 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /{game}", srv.handleFeed)
 	mux.HandleFunc("HEAD /{game}", srv.handleFeed)
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.Error(w, "not found, use one of: /genshin, /hkrpg, /nap", http.StatusNotFound)
+	})
 
 	port := os.Getenv("PORT")
 	if port == "" {

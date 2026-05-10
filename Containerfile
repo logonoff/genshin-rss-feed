@@ -1,12 +1,13 @@
-FROM golang:1-alpine3.23 AS builder
+FROM golang:1-alpine AS builder
 
 WORKDIR /build
 COPY . .
 RUN apk add --no-cache make
 RUN make build
 
-FROM alpine:3.23
+FROM scratch
 
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /build/bin/server /server
 USER 65534
 EXPOSE 3000
