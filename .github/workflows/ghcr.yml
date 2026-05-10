@@ -23,6 +23,6 @@ jobs:
       - name: Tag latest
         run: |
           IMAGE_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-          VERSION=${GITHUB_REF#refs/tags/v}
+          VERSION=${GITHUB_REF#refs/tags/}
           docker tag ghcr.io/${IMAGE_NAME}:${VERSION} ghcr.io/${IMAGE_NAME}:latest
           docker push ghcr.io/${IMAGE_NAME}:latest
