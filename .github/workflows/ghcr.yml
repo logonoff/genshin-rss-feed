@@ -19,3 +19,10 @@ jobs:
           image_name: ${{ github.repository }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: Containerfile
+
+      - name: Tag latest
+        run: |
+          IMAGE_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          VERSION=${GITHUB_REF#refs/tags/v}
+          docker tag ghcr.io/${IMAGE_NAME}:${VERSION} ghcr.io/${IMAGE_NAME}:latest
+          docker push ghcr.io/${IMAGE_NAME}:latest
